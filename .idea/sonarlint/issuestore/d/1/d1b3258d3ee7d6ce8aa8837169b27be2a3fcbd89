@@ -1,0 +1,93 @@
+
+c
+java:S1192:"FDefine a constant instead of duplicating this literal "Arial" 3 times.(åÅØ˜8ÛÅ1
+l
+java:S1192!"JDefine a constant instead of duplicating this literal "Player 2" 10 times.(ô¯½²ùÿÿÿÿ8‘ÛÅ1
+l
+java:S1192 "JDefine a constant instead of duplicating this literal "Player 1" 10 times.(İàüÅúÿÿÿÿ8‘ÛÅ1
+R
+java:S1066™"/Merge this if statement with the enclosing one.(È±üÈüÿÿÿÿ8‘ÛÅ1
+n
+java:S1301Œ"KReplace this "switch" statement by "if" statements to increase readability.(àÆ¼ùÿÿÿÿ8‘ÛÅ1
+i
+java:S1301æ"KReplace this "switch" statement by "if" statements to increase readability.(÷ÚÍ8‘ÛÅ1
+i
+java:S1301ñ"KReplace this "switch" statement by "if" statements to increase readability.(÷ÚÍ8‘ÛÅ1
+i
+java:S1301 "KReplace this "switch" statement by "if" statements to increase readability.(´•±×8‘ÛÅ1
+K
+java:S5411Š"(Use a primitive boolean expression here.(¬ğ ëûÿÿÿÿ8’ÛÅ1
+F
+java:S5411¦"(Use a primitive boolean expression here.(¹î›Ò8’ÛÅ1
+F
+java:S5411Æ"(Use a primitive boolean expression here.(¹î›Ò8’ÛÅ1
+F
+java:S5411í"(Use a primitive boolean expression here.(¹î›Ò8’ÛÅ1
+X	java:S125"<This block of commented-out lines of code should be removed.(¯ÿ·½8¾ÛÅ1
+f
+java:S3252("IUse static access with "javax.swing.WindowConstants" for "EXIT_ON_CLOSE".(¢¡´8¾ÛÅ1
+\
+java:S11610":Add the "@Override" annotation above this method signature(‡„‚§ÿÿÿÿÿ8ÀÛÅ1
+N
+java:S1602b",Remove useless curly braces around statement(å¿œ¯ùÿÿÿÿ8ÃÛÅ1
+X	java:S125d"<This block of commented-out lines of code should be removed.(ÊŠÍŠ8ÃÛÅ1
+I
+java:S1602l",Remove useless curly braces around statement(ÊšËŠ8ÄÛÅ1
+]	java:S125n"<This block of commented-out lines of code should be removed.(–·’øÿÿÿÿ8ÄÛÅ1
+k	java:S100†"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶½¨½8ÅÛÅ1
+p
+java:S3776†"RRefactor this method to reduce its Cognitive Complexity from 52 to the 15 allowed.(¶½¨½8ÅÛÅ1
+9
+java:S3626£"Remove this redundant jump.(ûÁİ…8ÆÛÅ1
+9
+java:S3626©"Remove this redundant jump.(ûÁİ…8ÆÛÅ1
+9
+java:S3626¯"Remove this redundant jump.(ûÁİ…8ÆÛÅ1
+9
+java:S3626¶"Remove this redundant jump.(ûÁİ…8ÆÛÅ1
+9
+java:S3626º"Remove this redundant jump.(ûÁİ…8ÆÛÅ1
+9
+java:S3626Ã"Remove this redundant jump.(ûÁİ…8ÆÛÅ1
+9
+java:S3626É"Remove this redundant jump.(ûÁİ…8ÆÛÅ1
+9
+java:S3626Ï"Remove this redundant jump.(ûÁİ…8ÆÛÅ1
+9
+java:S3626Ö"Remove this redundant jump.(ûÁİ…8ÆÛÅ1
+9
+java:S3626Ú"Remove this redundant jump.(ûÁİ…8ÆÛÅ1
+K
+java:S1125ˆ"(Remove the unnecessary boolean literals.(À¡”şúÿÿÿÿ8ÆÛÅ1
+D	java:S131Œ""Add a default case to this switch.(àÆ¼ùÿÿÿÿ8ÆÛÅ1
+k	java:S100ä"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ï¯ıË8ÈÛÅ1
+p
+java:S3776ä"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(ï¯ıË8ÈÛÅ1
+9
+java:S3626÷"Remove this redundant jump.(ûÁİ…8ÈÛÅ1
+9
+java:S3626ü"Remove this redundant jump.(ûÁİ…8ÈÛÅ1
+9
+java:S3626Œ"Remove this redundant jump.(ûÁİ…8ÈÛÅ1
+9
+java:S3626‘"Remove this redundant jump.(ûÁİ…8ÈÛÅ1
+?	java:S131æ""Add a default case to this switch.(÷ÚÍ8ÈÛÅ1
+?	java:S131ñ""Add a default case to this switch.(÷ÚÍ8ÉÛÅ1
+]	java:S126ù";"if ... else if" constructs should end with "else" clauses.(‰•¹óşÿÿÿÿ8ÉÛÅ1
+X	java:S126";"if ... else if" constructs should end with "else" clauses.(†Ø¼º8ÉÛÅ1
+p	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(»±ÍŸøÿÿÿÿ8ÊÛÅ1
+9
+java:S3626º"Remove this redundant jump.(ûÁİ…8ÊÛÅ1
+?	java:S131 ""Add a default case to this switch.(´•±×8ËÛÅ1
+X	java:S126µ";"if ... else if" constructs should end with "else" clauses.(‰Ùû8ËÛÅ1
+p	java:S100½"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(À—êÌúÿÿÿÿ8ËÛÅ1
+k	java:S100Â"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(™á¿÷8ÌÛÅ1
+]	java:S126Æ";"if ... else if" constructs should end with "else" clauses.(÷¹şöşÿÿÿÿ8ÌÛÅ1
+X	java:S126Ğ";"if ... else if" constructs should end with "else" clauses.(·•œÊ8ÍÛÅ1
+k	java:S100Ø"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ü­ô’8ÎÛÅ1
+p	java:S100Ü"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡šË’úÿÿÿÿ8ÎÛÅ1
+p	java:S100á"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÿ™½äûÿÿÿÿ8ÏÛÅ1
+p	java:S100æ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ş¸ÆÇüÿÿÿÿ8ÏÛÅ1
+p	java:S100ë"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰êÜøÿÿÿÿ8ĞÛÅ1
+N
+java:S1068"2Remove this unused "SETSTOWINMATCH" private field.(Ê™Ùe8ĞÛÅ1
