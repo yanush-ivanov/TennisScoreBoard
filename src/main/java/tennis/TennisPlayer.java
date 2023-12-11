@@ -26,15 +26,15 @@ public class TennisPlayer {
         return numberOfSetsWon;
     }
 
-    public void AddPointWon() {
+    public void addPointWon() {
         this.numberOfPointsWon++;
     }
 
-    public void AddGameWon() {
+    public void addGameWon() {
         this.numberOfGamesWon++;
     }
 
-    public void AddSetWon() {
+    public void addSetWon() {
         this.numberOfSetsWon++;
     }
 }

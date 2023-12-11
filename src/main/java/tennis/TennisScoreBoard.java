@@ -9,41 +9,44 @@ import static java.lang.Math.abs;
 
 public class TennisScoreBoard extends JFrame {
 
-    private static final int COLUMNFORPOINTS = 3;
-    private static final int COLUMNFORGAMES = 2;
-    private static final int COLUMNFORSETS = 1;
-    private static final int ROWFORPLAYER1 = 0;
-    private static final int ROWFORPLAYER2 = 1;
-    private static final int SETSTOWINMATCH = 2;
-    private static final Integer DEUCEPOINTS = 3;
+    private static final int COLUMN_FOR_POINTS = 3;
+    private static final int COLUMN_FOR_GAMES = 2;
+    private static final int COLUMN_FOR_SETS = 1;
+    private static final int ROW_FOR_PLAYER1 = 0;
+    private static final int ROW_FOR_PLAYER2 = 1;
+    private static final int SETS_TO_WIN_MATCH = 2;
+    private static final Integer DEUCE_POINTS = 3;
+    private static final String PLAYER_ONE = "Player 1";
+    private static final String PLAYER_TWO = "Player 2";
     private JFrame frame;
     private JTable table;
     private DefaultTableModel tableModel;
     private Boolean tieBreak = false;
-
     private Boolean gameOver = false;
+
     public TennisScoreBoard(TennisPlayer p1, TennisPlayer p2) {
+        initializeFrame();
+        initializeTable();
+        initializeButtons(p1, p2);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
 
-        // Set the title of the frame
-        //super("Score Board");
+    private void initializeFrame() {
+        frame = new JFrame("Score Board");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(600, 300);
+        frame.setLayout(new BorderLayout());
+    }
 
-        // Sample data
+    private void initializeTable() {
         Object[][] data = {
-                {"Player 1", "0", "0", "0"},
-                {"Player 2", "0", "0", "0"}
+                {PLAYER_ONE, "0", "0", "0"},
+                {PLAYER_TWO, "0", "0", "0"}
         };
-
-        // Column names
         String[] columnNames = {"Player", "Sets", "Games", "Points"};
 
-        frame = new JFrame("Score Board");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 300);
-
-        // Create a DefaultTableModel
         tableModel = new DefaultTableModel(data, columnNames);
-
-        // Create a JTable with the model
         table = new JTable(tableModel) {
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 return false;
@@ -51,33 +54,30 @@ public class TennisScoreBoard extends JFrame {
         };
         table.setRowSelectionAllowed(false);
 
-        // Create a custom cell renderer for the table header
         DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer();
         headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-
-        Font headerFont = new Font("Arial", Font.BOLD, 16);
-        table.getTableHeader().setFont(headerFont);
+        table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
 
         DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-                // Set the preferred height of the cell to auto
+                Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 table.setRowHeight(row, (getPreferredSize().height + 20));
                 component.setFont(new Font("Arial", Font.BOLD, 24));
 
-                switch( column ) {
-                    case 1: component.setForeground(Color.decode("#019920"));
+                switch (column) {
+                    case 1:
+                        component.setForeground(Color.decode("#019920"));
                         break;
-
-                    case 2: component.setForeground(Color.BLUE);
+                    case 2:
+                        component.setForeground(Color.BLUE);
                         break;
-
-                    case 3: component.setForeground(Color.BLACK);
+                    case 3:
+                        component.setForeground(Color.BLACK);
                         break;
-
-                    default: component.setForeground(Color.RED);
+                    default:
+                        component.setForeground(Color.RED);
                         component.setFont(new Font("Arial", Font.BOLD, 18));
                         break;
                 }
@@ -90,289 +90,266 @@ public class TennisScoreBoard extends JFrame {
             table.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
         }
 
-        // Create a Button 1
-        JButton buttonP1 = new JButton("Point for Player 1");
-        buttonP1.setPreferredSize(new Dimension(220, 30));
-
-        // Add an ActionListener to the button 1
-        buttonP1.addActionListener(e -> {
-            ScoreUpdate( p1, p2, "Player 1");
-            //JOptionPane.showMessageDialog(frame, "Player 1 clicked!");
-        });
-
-        // Create a Button 2
-        JButton buttonP2 = new JButton("Point for Player 2");
-        buttonP2.setPreferredSize(new Dimension(220, 30));
-
-        // Add an ActionListener to the button 2
-        buttonP2.addActionListener(e -> {
-            ScoreUpdate( p1, p2, "Player 2");
-            //JOptionPane.showMessageDialog(frame, "Player 2 clicked!");
-        });
-
-        // Create a JPanel for buttons
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(buttonP1);
-        buttonPanel.add(buttonP2);
-
-        // Set layout manager of the frame to BorderLayout
-        frame.setLayout(new BorderLayout());
-
-        // Add the table to the center and buttons to the south
         frame.add(new JScrollPane(table), BorderLayout.CENTER);
+    }
+
+    private void initializeButtons(TennisPlayer p1, TennisPlayer p2) {
+
+        JButton buttonPlayer1 = new JButton("Point for Player 1");
+        buttonPlayer1.setPreferredSize(new Dimension(220, 30));
+        buttonPlayer1.addActionListener(e -> {
+            scoreUpdate(p1, p2, PLAYER_ONE);
+        });
+
+        JButton buttonPlayer2 = new JButton("Point for Player 2");
+        buttonPlayer2.setPreferredSize(new Dimension(220, 30));
+        buttonPlayer2.addActionListener(e -> {
+            scoreUpdate(p1, p2, PLAYER_TWO);
+        });
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(buttonPlayer1);
+        buttonPanel.add(buttonPlayer2);
+
         frame.add(buttonPanel, BorderLayout.SOUTH);
-
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
     }
 
-    // Method to change the value in a specific cell
-    public void changeTableValue(int rowIndex, int columnIndex, Object newValue) {
-        tableModel.setValueAt(newValue, rowIndex, columnIndex);
-    }
+    private void scoreUpdate(TennisPlayer p1, TennisPlayer p2, String pointForPlayer) {
+        tieBreak = (p1.getNumberOfGamesWon() == 6 && p2.getNumberOfGamesWon() == 6);
+        if(Boolean.TRUE.equals(tieBreak)) {
+            frame.setTitle("Score Board      --- tiebreak ---");
+        } else frame.setTitle("Score Board");
 
-    private void ScoreUpdate( TennisPlayer p1, TennisPlayer p2, String pointForPlayer ) {
+        if (Boolean.TRUE.equals(gameOver)) return;
 
-        tieBreak = ( p1.getNumberOfGamesWon() == 6 && p2.getNumberOfGamesWon() == 6 ) ? true : false;
-
-        if ( gameOver ) return;
-
-        switch(pointForPlayer) {
-            case "Player 1":
-                    p1.AddPointWon();
+        switch (pointForPlayer) {
+            case PLAYER_ONE:
+                p1.addPointWon();
                 break;
-            case "Player 2":
-                    p2.AddPointWon();
+            case PLAYER_TWO:
+                p2.addPointWon();
                 break;
         }
 
-        int numPointsDiff = abs(p1.getPointsWon()-p2.getPointsWon());
+        int numPointsDiff = abs(p1.getPointsWon() - p2.getPointsWon());
 
-        //Check for Deuce
-        if ( numPointsDiff == 0 ) {
-            if (p1.getPointsWon() > 2) {
-                UpdateDeucePointsOnBoard();
+        if (numPointsDiff == 0 && Boolean.FALSE.equals(tieBreak) && p1.getPointsWon() > 2) {
+                updateDeucePointsOnBoard();
                 return;
-            }
         }
 
-        switch(pointForPlayer) {
-            case "Player 1":
-                    if( p1.getPointsWon() <= 3 ) {
-                        UpdatePointsOnBoard(p1, p2);
-                        return;
-                    }
-                    else {
-                        if( tieBreak ) {
-                            if( p1.getPointsWon() < 7 ) {
-                                UpdatePointsOnBoard(p1, p2);
-                                return;
-                            }
-                            else {
-                                if( numPointsDiff >= 2 ) {
-                                    // player wins tieBreak
-                                    UpdateGamesWon(p1, p2, "Player 1");
-                                    return;
-                                }
-                            }
-                        }
-                        else {
-                            if( numPointsDiff >= 2 ) {
-                                UpdateGamesWon(p1, p2, "Player 1");
-                                return;
-                            }
-                            else {
-                                UpdatePointsOnBoard(p1, p2);
-                                return;
+        switch (pointForPlayer) {
+            case PLAYER_ONE:
+                if (p1.getPointsWon() <= 3)                 {
+                    updatePointsOnBoard(p1, p2);
+                } else {
+                    if (Boolean.TRUE.equals(tieBreak)) {
+                        if (p1.getPointsWon() < 7) {
+                            updatePointsOnBoard(p1, p2);
+                        } else {
+                            if (numPointsDiff >= 2) {
+                                updateGamesWon(p1, p2, PLAYER_ONE);
+                            } else {
+                                updatePointsOnBoard(p1, p2);
                             }
                         }
                     }
+                    else { // not in tieBreak
+                        if (numPointsDiff >= 2) {
+                            updateGamesWon(p1, p2, PLAYER_ONE);
+                        } else {
+                            updatePointsOnBoard(p1, p2);
+                        }
+                    }
+                }
                 break;
 
-            case "Player 2":
-                    if( p2.getPointsWon() <= 3 ) {
-                        UpdatePointsOnBoard(p1, p2);
-                        return;
-                    }
-                    else {
-                        if( tieBreak ) {
-                            if( p2.getPointsWon() < 7 ) {
-                                UpdatePointsOnBoard(p1, p2);
-                                return;
-                            }
-                            else {
-                                if( numPointsDiff >= 2 ) {
-                                    // player wins tieBreak
-                                    UpdateGamesWon(p1, p2, "Player 2");
-                                    return;
-                                }
+            case PLAYER_TWO:
+                if (p2.getPointsWon() <= 3) {
+                    updatePointsOnBoard(p1, p2);
+                } else {
+                    if (Boolean.TRUE.equals(tieBreak)) {
+                        if (p2.getPointsWon() < 7) {
+                            updatePointsOnBoard(p1, p2);
+                        } else {
+                            if (numPointsDiff >= 2) {
+                                updateGamesWon(p1, p2, PLAYER_TWO);
+                            } else {
+                                updatePointsOnBoard(p1, p2);
                             }
                         }
-                        else {
-                            if( numPointsDiff >= 2 ) {
-                                UpdateGamesWon(p1, p2, "Player 2");
-                                return;
-                            }
-                            else {
-                                UpdatePointsOnBoard(p1, p2);
-                                return;
-                            }
+                    } else { // not in tieBreak
+                        if (numPointsDiff >= 2) {
+                            updateGamesWon(p1, p2, PLAYER_TWO);
+                        } else {
+                            updatePointsOnBoard(p1, p2);
                         }
                     }
+                }
                 break;
-
-            default: return;
         }
     }
 
-    private void UpdateGamesWon(TennisPlayer p1, TennisPlayer p2, String gameForPlayer) {
-
-        switch(gameForPlayer) {
-            case "Player 1":
-                p1.AddGameWon();
+    private void updateGamesWon(TennisPlayer p1, TennisPlayer p2, String gameForPlayer) {
+        switch (gameForPlayer) {
+            case PLAYER_ONE:
+                p1.addGameWon();
                 break;
-            case "Player 2":
-                    p2.AddGameWon();
+            case PLAYER_TWO:
+                p2.addGameWon();
                 break;
         }
 
         int numGamesDiff = abs(p1.getNumberOfGamesWon() - p2.getNumberOfGamesWon());
 
-        switch(gameForPlayer) {
-            case "Player 1":
-                    if( p1.getNumberOfGamesWon() < 6 ) {
-                        InitPointsWon(p1, p2);
-                        UpdatePointsOnBoard(p1, p2);
-                        UpdateGamesOnBoard(p1, p2);
-                        return;
-                    }
-                    else if( p1.getNumberOfGamesWon() >= 6 ) {
-                        if( numGamesDiff < 2 ) {
-                            UpdateGamesOnBoard(p1, p2);
-                            return;
+        switch (gameForPlayer) {
+            case PLAYER_ONE:
+                if (p1.getNumberOfGamesWon() < 6) {
+                    initPointsWon(p1, p2);
+                    updatePointsOnBoard(p1, p2);
+                    updateGamesOnBoard(p1, p2);
+                } else { // p1.getNumberOfGamesWon() >= 6
+                    if (numGamesDiff < 2) {
+                        initPointsWon(p1, p2);
+                        updatePointsOnBoard(p1, p2);
+                        if(Boolean.TRUE.equals(tieBreak) && p1.getNumberOfGamesWon() == 7) {
+                            updateSetsWon(p1, p2, PLAYER_ONE);
                         }
-                        else {
-                            InitPointsWon(p1, p2);
-                            UpdatePointsOnBoard(p1, p2);
-                            UpdateGamesOnBoard(p1, p2);
-                            UpdateSetsWon(p1, p2, "Player 1");
-                        }
+                        else updateGamesOnBoard(p1, p2);
+                    } else {
+                        initPointsWon(p1, p2);
+                        updatePointsOnBoard(p1, p2);
+                        updateGamesOnBoard(p1, p2);
+                        updateSetsWon(p1, p2, PLAYER_ONE);
                     }
+                }
                 break;
 
-            case "Player 2":
-                if( p2.getNumberOfGamesWon() < 6 ) {
-                    InitPointsWon(p1, p2);
-                    UpdatePointsOnBoard(p1, p2);
-                    UpdateGamesOnBoard(p1, p2);
-                    return;
-                }
-                else if( p2.getNumberOfGamesWon() >= 6 ) {
-                    if( numGamesDiff < 2 ) {
-                        UpdateGamesOnBoard(p1, p2);
-                        return;
-                    }
-                    else {
-                        InitPointsWon(p1, p2);
-                        UpdatePointsOnBoard(p1, p2);
-                        UpdateGamesOnBoard(p1, p2);
-                        UpdateSetsWon(p1, p2, "Player 2");
+            case PLAYER_TWO:
+                if (p2.getNumberOfGamesWon() < 6) {
+                    initPointsWon(p1, p2);
+                    updatePointsOnBoard(p1, p2);
+                    updateGamesOnBoard(p1, p2);
+                } else { // p2.getNumberOfGamesWon() >= 6
+                    if (numGamesDiff < 2) {
+                        initPointsWon(p1, p2);
+                        updatePointsOnBoard(p1, p2);
+                        if(Boolean.TRUE.equals(tieBreak) && p2.getNumberOfGamesWon() == 7) {
+                            updateSetsWon(p1, p2, PLAYER_TWO);
+                        }
+                        else updateGamesOnBoard(p1, p2);
+                    } else {
+                        initPointsWon(p1, p2);
+                        updatePointsOnBoard(p1, p2);
+                        updateGamesOnBoard(p1, p2);
+                        updateSetsWon(p1, p2, PLAYER_TWO);
                     }
                 }
                 break;
         }
     }
 
-    private void UpdateSetsWon(TennisPlayer p1, TennisPlayer p2, String setForPlayer) {
+    private void updateSetsWon(TennisPlayer p1, TennisPlayer p2, String setForPlayer) {
 
-        switch(setForPlayer) {
-            case "Player 1":
-                    p1.AddSetWon();
+        switch (setForPlayer) {
+            case PLAYER_ONE:
+                p1.addSetWon();
                 break;
-
-            case "Player 2":
-                    p2.AddSetWon();
+            case PLAYER_TWO:
+                p2.addSetWon();
                 break;
         }
 
-        UpdateSetsOnBoard(p1, p2);
-        InitPointsWon(p1, p2);
-        UpdatePointsOnBoard(p1, p1);
-        InitGamesWon(p1, p2);
-        UpdateGamesOnBoard(p1, p2);
+        initPointsWon(p1, p2);
+        updatePointsOnBoard(p1, p1);
+        initGamesWon(p1, p2);
+        updateGamesOnBoard(p1, p2);
+        updateSetsOnBoard(p1, p2);
 
-        if( p1.getNumberOfSetsWon() > 1) {
-            // Player 1 wins the match
+        if (p1.getNumberOfSetsWon() == SETS_TO_WIN_MATCH) {
             gameOver = true;
             JOptionPane.showMessageDialog(frame, "Player 1 is the Winner !");
-        }
-        else if( p2.getNumberOfSetsWon() > 1) {
-            // Player 2 wins the match
+        } else if (p2.getNumberOfSetsWon() == SETS_TO_WIN_MATCH) {
             gameOver = true;
             JOptionPane.showMessageDialog(frame, "Player 2 is the Winner !");
         }
-        return;
     }
 
-    private void InitPointsWon(TennisPlayer p1, TennisPlayer p2) {
+    private void initPointsWon(TennisPlayer p1, TennisPlayer p2) {
         p1.setNumberOfPointsWon(0);
         p2.setNumberOfPointsWon(0);
     }
 
-    private void UpdatePointsOnBoard(TennisPlayer p1, TennisPlayer p2) {
-        if(p1.getPointsWon() >= p2.getPointsWon()) {
-            changeTableValue(ROWFORPLAYER1, COLUMNFORPOINTS, PrepareScorePointsToShow(p1.getPointsWon()));
+    private void updatePointsOnBoard(TennisPlayer p1, TennisPlayer p2) {
+
+        if (p1.getPointsWon() >= p2.getPointsWon()) {
+            changeTableValue(ROW_FOR_PLAYER1, COLUMN_FOR_POINTS, prepareScorePointsToShow(p1.getPointsWon()));
         }
-        else if(p1.getPointsWon() < p2.getPointsWon() ) {
-            if( p1.getPointsWon() > DEUCEPOINTS.shortValue()) {
-                changeTableValue(ROWFORPLAYER1, COLUMNFORPOINTS, PrepareScorePointsToShow(DEUCEPOINTS));
+        else { //  p1.getPointsWon() < p2.getPointsWon()
+            if (p1.getPointsWon() > DEUCE_POINTS.shortValue()) {
+                if(Boolean.FALSE.equals(tieBreak)) {
+                    changeTableValue(ROW_FOR_PLAYER1, COLUMN_FOR_POINTS, prepareScorePointsToShow(DEUCE_POINTS));
+                }
+                else changeTableValue(ROW_FOR_PLAYER1, COLUMN_FOR_POINTS, prepareScorePointsToShow(p1.getPointsWon()));
             }
-            else changeTableValue(ROWFORPLAYER1, COLUMNFORPOINTS, PrepareScorePointsToShow(p1.getPointsWon()));
+            else changeTableValue(ROW_FOR_PLAYER1, COLUMN_FOR_POINTS, prepareScorePointsToShow(p1.getPointsWon()));
         }
 
-        if(p2.getPointsWon() >= p1.getPointsWon()) {
-            changeTableValue(ROWFORPLAYER2, COLUMNFORPOINTS, PrepareScorePointsToShow(p2.getPointsWon()));
+        if (p2.getPointsWon() >= p1.getPointsWon()) {
+            changeTableValue(ROW_FOR_PLAYER2, COLUMN_FOR_POINTS, prepareScorePointsToShow(p2.getPointsWon()));
         }
-        else if(p2.getPointsWon() < p1.getPointsWon() ) {
-            if( p2.getPointsWon() > DEUCEPOINTS.shortValue()) {
-                changeTableValue(ROWFORPLAYER2, COLUMNFORPOINTS, PrepareScorePointsToShow(DEUCEPOINTS));
+        else { // p2.getPointsWon() < p1.getPointsWon()
+            if (p2.getPointsWon() > DEUCE_POINTS.shortValue()) {
+                if(Boolean.FALSE.equals(tieBreak)) {
+                    changeTableValue(ROW_FOR_PLAYER2, COLUMN_FOR_POINTS, prepareScorePointsToShow(DEUCE_POINTS));
+                }
+                else changeTableValue(ROW_FOR_PLAYER2, COLUMN_FOR_POINTS, prepareScorePointsToShow(p2.getPointsWon()));
             }
-            else changeTableValue(ROWFORPLAYER2, COLUMNFORPOINTS, PrepareScorePointsToShow(p2.getPointsWon()));
+            else changeTableValue(ROW_FOR_PLAYER2, COLUMN_FOR_POINTS, prepareScorePointsToShow(p2.getPointsWon()));
         }
     }
 
-    private void UpdateDeucePointsOnBoard() {
-        changeTableValue(ROWFORPLAYER1, COLUMNFORPOINTS, PrepareScorePointsToShow(DEUCEPOINTS));
-        changeTableValue(ROWFORPLAYER2, COLUMNFORPOINTS, PrepareScorePointsToShow(DEUCEPOINTS));
+    private void updateDeucePointsOnBoard() {
+        changeTableValue(ROW_FOR_PLAYER1, COLUMN_FOR_POINTS, prepareScorePointsToShow(DEUCE_POINTS));
+        changeTableValue(ROW_FOR_PLAYER2, COLUMN_FOR_POINTS, prepareScorePointsToShow(DEUCE_POINTS));
     }
-    private void InitGamesWon(TennisPlayer p1, TennisPlayer p2) {
+
+    private void initGamesWon(TennisPlayer p1, TennisPlayer p2) {
         p1.setNumberOfGamesWon(0);
         p2.setNumberOfGamesWon(0);
     }
 
-    private void UpdateGamesOnBoard(TennisPlayer p1, TennisPlayer p2) {
-        changeTableValue(ROWFORPLAYER1, COLUMNFORGAMES, p1.getNumberOfGamesWon().toString());
-        changeTableValue(ROWFORPLAYER2, COLUMNFORGAMES, p2.getNumberOfGamesWon().toString());
+    private void updateGamesOnBoard(TennisPlayer p1, TennisPlayer p2) {
+        changeTableValue(ROW_FOR_PLAYER1, COLUMN_FOR_GAMES, p1.getNumberOfGamesWon().toString());
+        changeTableValue(ROW_FOR_PLAYER2, COLUMN_FOR_GAMES, p2.getNumberOfGamesWon().toString());
     }
 
-    private void UpdateSetsOnBoard(TennisPlayer p1, TennisPlayer p2) {
-        changeTableValue(ROWFORPLAYER1, COLUMNFORSETS, p1.getNumberOfSetsWon().toString());
-        changeTableValue(ROWFORPLAYER2, COLUMNFORSETS, p2.getNumberOfSetsWon().toString());
+    private void updateSetsOnBoard(TennisPlayer p1, TennisPlayer p2) {
+        changeTableValue(ROW_FOR_PLAYER1, COLUMN_FOR_SETS, p1.getNumberOfSetsWon().toString());
+        changeTableValue(ROW_FOR_PLAYER2, COLUMN_FOR_SETS, p2.getNumberOfSetsWon().toString());
     }
 
-    private String PrepareScorePointsToShow(Integer points) {
+    private String prepareScorePointsToShow(Integer points) {
 
-        if( tieBreak ) {
+        if (Boolean.TRUE.equals(tieBreak)) {
             return points.toString();
         }
 
-        switch(points) {
-            case 0: return "0";
-            case 1: return "15";
-            case 2: return "30";
-            case 3: return "40";
-            default: return "Ad";
+        switch (points) {
+            case 0:
+                return "0";
+            case 1:
+                return "15";
+            case 2:
+                return "30";
+            case 3:
+                return "40";
+            default:
+                return "Ad";
         }
     }
 
+    public void changeTableValue(int rowIndex, int columnIndex, Object newValue) {
+        tableModel.setValueAt(newValue, rowIndex, columnIndex);
+    }
 }
